@@ -18,7 +18,7 @@
     </div>
     <div class="footer">
       <img src="@/assets/img/detail/icon_ensure.png" alt="" />
-      <div class="text">弘源旅途, 永无止境!</div>
+      <div class="text">万特旅途, 永无止境!</div>
     </div>
   </div>
 </template>
