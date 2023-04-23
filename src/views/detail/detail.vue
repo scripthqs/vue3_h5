@@ -80,6 +80,7 @@ const names = computed(() => {
   return Object.keys(sectionEls.value);
 });
 const getSectionRef = (value) => {
+  console.log(value.$el, "value");
   if (!value) return;
   const name = value.$el.getAttribute("name");
   sectionEls.value[name] = value.$el;
@@ -88,8 +89,11 @@ const getSectionRef = (value) => {
 let isClick = false;
 let currentDistance = -1;
 const tabClick = (index) => {
+  console.log(sectionEls.value);
   const key = Object.keys(sectionEls.value)[index];
+  console.log(key);
   const el = sectionEls.value[key];
+  console.log(el);
   let distance = el.offsetTop;
   if (index !== 0) {
     distance = distance - 44;

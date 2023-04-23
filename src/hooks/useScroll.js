@@ -1,8 +1,7 @@
-import { onDeactivated, onMounted, onUnmounted, ref } from 'vue';
-import { throttle } from 'underscore'
+import { onDeactivated, onMounted, onUnmounted, ref } from "vue";
+import { throttle } from "underscore";
 
 // console.log(throttle)
-
 
 // export default function useScroll(reachBottomCB) {
 //   const scrollListenerHandler = () => {
@@ -15,50 +14,50 @@ import { throttle } from 'underscore'
 //       if (reachBottomCB) reachBottomCB()
 //     }
 //   }
-  
+
 //   onMounted(() => {
 //     window.addEventListener("scroll", scrollListenerHandler)
 //   })
-  
+
 //   onUnmounted(() => {
 //     window.removeEventListener("scroll", scrollListenerHandler)
 //   })
 // }
 
 export default function useScroll(elRef) {
-  let el = window
+  let el = window;
 
-  const isReachBottom = ref(false)
+  const isReachBottom = ref(false);
 
-  const clientHeight = ref(0)
-  const scrollTop = ref(0)
-  const scrollHeight = ref(0)
+  const clientHeight = ref(0);
+  const scrollTop = ref(0);
+  const scrollHeight = ref(0);
 
   // 防抖/节流
   const scrollListenerHandler = throttle(() => {
     if (el === window) {
-      clientHeight.value = document.documentElement.clientHeight
-      scrollTop.value = document.documentElement.scrollTop
-      scrollHeight.value = document.documentElement.scrollHeight
+      clientHeight.value = document.documentElement.clientHeight;
+      scrollTop.value = document.documentElement.scrollTop;
+      scrollHeight.value = document.documentElement.scrollHeight;
     } else {
-      clientHeight.value = el.clientHeight
-      scrollTop.value = el.scrollTop
-      scrollHeight.value = el.scrollHeight
+      clientHeight.value = el.clientHeight;
+      scrollTop.value = el.scrollTop;
+      scrollHeight.value = el.scrollHeight;
     }
-    if (clientHeight.value + scrollTop.value >= scrollHeight.value) {
-      console.log("滚动到底部了")
-      isReachBottom.value = true
+    if (scrollHeight.value - scrollTop.value <= clientHeight.value) {
+      console.log("滚动到底部了");
+      isReachBottom.value = true;
     }
-  }, 100)
-  
-  onMounted(() => {
-    if (elRef) el = elRef.value
-    el.addEventListener("scroll", scrollListenerHandler)
-  })
-  
-  onUnmounted(() => {
-    el.removeEventListener("scroll", scrollListenerHandler)
-  })
+  }, 100);
 
-  return { isReachBottom, clientHeight, scrollTop, scrollHeight }
+  onMounted(() => {
+    if (elRef) el = elRef.value;
+    el.addEventListener("scroll", scrollListenerHandler);
+  });
+
+  onUnmounted(() => {
+    el.removeEventListener("scroll", scrollListenerHandler);
+  });
+
+  return { isReachBottom, clientHeight, scrollTop, scrollHeight };
 }
